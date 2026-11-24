@@ -1,0 +1,22 @@
+
+/* SLBridge administration heading typography only. */
+
+/* Keep the page title visually consistent with section headings. */
+body:has([id*="local_slbridge-gettingstarted"])
+#page-header h1,
+body:has([id*="local_slbridge-gettingstarted"])
+.page-header-headings h1 {
+    font-family: inherit !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+}
+
+/* Getting Started and Managing Your API Key. */
+body:has([id*="local_slbridge-gettingstarted"])
+.local-slbridge-guide h4 {
+    font-family: inherit !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+}

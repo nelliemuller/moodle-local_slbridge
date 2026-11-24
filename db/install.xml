@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='utf-8'?>
+<XMLDB PATH="local/slbridge/db" VERSION="2026112300" COMMENT="SLBridge tables">
+    <TABLES>
+        <TABLE NAME="local_slbridge_link" COMMENT="Verified avatar links">
+            <FIELDS>
+                <FIELD NAME="platform" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="legacy" />
+                <FIELD NAME="grid" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" />
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="avataruuid" TYPE="char" LENGTH="36" NOTNULL="true" />
+                <FIELD NAME="avatarname" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" />
+                <FIELD NAME="verifiedat" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="revokedat" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="useridx" UNIQUE="false" FIELDS="userid" />
+                <INDEX NAME="avataridx" UNIQUE="false" FIELDS="avataruuid" />
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_slbridge_chal" COMMENT="One-time linking challenges">
+            <FIELDS>
+                <FIELD NAME="platform" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="legacy" />
+                <FIELD NAME="grid" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" />
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="codehash" TYPE="char" LENGTH="64" NOTNULL="true" />
+                <FIELD NAME="expiresat" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="usedat" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" />
+                <FIELD NAME="avataruuid" TYPE="char" LENGTH="36" NOTNULL="true" DEFAULT="" />
+                <FIELD NAME="avatarname" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" />
+                <FIELD NAME="objectuuid" TYPE="char" LENGTH="36" NOTNULL="true" DEFAULT="" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="codeidx" UNIQUE="true" FIELDS="codehash" />
+                <INDEX NAME="useridx" UNIQUE="false" FIELDS="userid" />
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_slbridge_session" COMMENT="Course attendance sessions">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="teacherid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" />
+                <FIELD NAME="starts" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="ends" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="region" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="courseidx" UNIQUE="false" FIELDS="courseid" />
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_slbridge_attend" COMMENT="Attendance events">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="sessionid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="avataruuid" TYPE="char" LENGTH="36" NOTNULL="true" />
+                <FIELD NAME="firstseen" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="lastseen" TYPE="int" LENGTH="10" NOTNULL="true" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="uniqueattendance" UNIQUE="true" FIELDS="sessionid,userid" />
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_slbridge_visit" COMMENT="Verified Second Life station visits">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="stationid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="avataruuid" TYPE="char" LENGTH="36" NOTNULL="true" />
+                <FIELD NAME="firstseen" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="lastseen" TYPE="int" LENGTH="10" NOTNULL="true" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="uniquevisit" UNIQUE="true" FIELDS="courseid,stationid,userid" />
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_slbridge_station" COMMENT="Teacher-configured learning stations">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" />
+                <FIELD NAME="slurl" TYPE="text" NOTNULL="true" />
+                <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" />
+                <FIELD NAME="assessment" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="attendance" />
+                <FIELD NAME="maxgrade" TYPE="number" LENGTH="10" DECIMALS="2" NOTNULL="true" DEFAULT="0" />
+                <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" />
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="courseidx" UNIQUE="false" FIELDS="courseid" />
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_slbridge_object" COMMENT="Registered Second Life station objects">
+            <FIELDS>
+                <FIELD NAME="platform" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="legacy" />
+                <FIELD NAME="grid" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" />
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="stationid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="objectuuid" TYPE="char" LENGTH="36" NOTNULL="true" />
+                <FIELD NAME="credentialhash" TYPE="char" LENGTH="64" NOTNULL="true" />
+                <FIELD NAME="credentialenc" TYPE="text" NOTNULL="false" />
+                <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" />
+                <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="pending" />
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="objectuuiduniq" UNIQUE="true" FIELDS="objectuuid" />
+                <INDEX NAME="stationidx" UNIQUE="false" FIELDS="stationid" />
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_slbridge_pairing" COMMENT="Temporary object pairing requests">
+            <FIELDS>
+                <FIELD NAME="platform" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="legacy" />
+                <FIELD NAME="grid" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" />
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="stationid" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="codehash" TYPE="char" LENGTH="64" NOTNULL="true" />
+                <FIELD NAME="objectuuid" TYPE="char" LENGTH="36" NOTNULL="true" DEFAULT="" />
+                <FIELD NAME="expiresat" TYPE="int" LENGTH="10" NOTNULL="true" />
+                <FIELD NAME="usedat" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" />
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="codehashuniq" UNIQUE="true" FIELDS="codehash" />
+                <INDEX NAME="stationidx" UNIQUE="false" FIELDS="stationid" />
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>
