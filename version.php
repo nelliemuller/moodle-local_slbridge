@@ -20,7 +20,7 @@
 // SLBridge, independently developed for Moodle 5.3.
 defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'local_slbridge';
-$plugin->version = 2026112401;
+$plugin->version = 2026112500;
 $plugin->requires = 2025041400;
 $plugin->maturity = MATURITY_ALPHA;
-$plugin->release = '0.1.1 Alpha';
+$plugin->release = '0.1.2 Alpha';
